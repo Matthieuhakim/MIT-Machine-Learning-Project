@@ -7,17 +7,21 @@ After carefully aggregating sources from pizza ingredients and prices, oil price
 ## 1. `daily_sales.csv`
 
 **Description:**  
-Daily pizza sales pivot table with each row representing a specific day and time bucket. Each pizza type has a separate column with the number of pizzas sold. The dataset also includes the daily oil price and holiday indicator.
+Feature-engineered daily pizza sales dataset where each row represents a specific day and time bucket.
+All same-day pizza sales columns are treated as targets.
+The features include contextual variables, previous-day pizza demand, and 3-day rolling averages for each pizza type and time bucket.
 
 **Columns:**
 
-| Column | Description |
-|--------|-------------|
-| `date` | Date of the sales record (DD/MM/YYYY) |
-| `time_bucket` | Time of day category (`Lunch`, `Afternoon`, `Dinner`) |
-| `<pizza_type>_<size>` | Number of pizzas sold for each pizza type and size (sparse-encoded) |
-| `oil_price` | Daily Brent oil price (USD per barrel) |
-| `is_holiday` | Binary flag indicating whether the day is a public holiday (1 = holiday, 0 = not holiday) |
+| Column                       | Description                                                                                          |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `date`                       | Date of the sales record (DD/MM/YYYY)                                                                |
+| `time_bucket`                | Time of day category (`Lunch`, `Afternoon`, `Dinner`) encoded as a categorical feature               |
+| `oil_price`                  | Daily Brent oil price (USD per barrel)                                                               |
+| `is_holiday`                 | Binary flag indicating whether the day is a public holiday (1 = holiday, 0 = not)                    |
+| `<pizza>_<bucket>_yesterday` | Pizza sales for each pizza type and size during each time bucket on the previous day                 |
+| `<pizza>_<bucket>_avg3`      | 3-day rolling average of pizza sales for each pizza type and bucket (excluding the current day)      |
+| `<pizza_type>_<size>`        | **Target variables**: actual pizza sales for each pizza type and size during the current time bucket |
 
 ---
 
